@@ -14,31 +14,10 @@
         <versions.tomee.embedded>1.7.3</versions.tomee.embedded>
         <versions.openjpa>2.4.1</versions.openjpa>
         <versions.myface>2.2.10</versions.myface>
+        <versions.javaee>6.0-6</versions.javaee>
+        <versions.openejb>4.7.4</versions.openejb>
+        <versions.tomee>1.7.3</versions.tomee>
     </properties>
-
-    <profiles>
-        <profile>
-            <!-- Use 'mvn -P stable' to activate stable dependencies (by default) -->
-            <id>stable</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <versions.javaee>6.0-6</versions.javaee>
-                <versions.openejb>4.7.4</versions.openejb>
-                <versions.tomee>1.7.3</versions.tomee>
-            </properties>
-        </profile>
-        <profile>
-            <!-- Use 'mvn -P experimental' to activate these dependencies -->
-            <id>experimental</id>
-            <properties>
-                <versions.javaee>7.0-SNAPSHOT</versions.javaee>
-                <versions.openejb>5.0.0-SNAPSHOT</versions.openejb>
-                <versions.tomee>2.0.0-SNAPSHOT</versions.tomee>
-            </properties>
-        </profile>
-    </profiles>
 
     <repositories>
         <!-- Snapshot repository to access to the latest version of the OpenEJB framework -->
@@ -50,11 +29,6 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20160810</version>
-        </dependency>
         <!-- Dependencies for the OpenEJB framework (provided at runtime by the app server) -->
         <dependency>
             <groupId>org.apache.openejb</groupId>
@@ -74,37 +48,11 @@
             <version>${versions.tomee}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Dependency to integrate REST clients (order matters for CXF) (provided) -->
-        <dependency>
-            <groupId>org.apache.openejb</groupId>
-            <artifactId>openejb-cxf</artifactId>
-            <version>${versions.openejb}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.openejb</groupId>
-            <artifactId>openejb-cxf-rs</artifactId>
-            <version>${versions.openejb}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Dependencies for the JSF framework (provided)-->
-        <dependency>
-            <groupId>org.apache.myfaces.core</groupId>
-            <artifactId>myfaces-api</artifactId>
-            <version>${versions.myface}</version>
-            <scope>provided</scope>
-        </dependency>
         <!-- Dependencies for the testing frameworks (Junit, Mockito & Arquillian) (tests only) -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
         <dependency>
