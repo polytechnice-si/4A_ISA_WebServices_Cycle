@@ -9,7 +9,7 @@
 To build the project (Java code for the alternative web services and the associated clients) and start the container hosting the web services, simply clone the project, and use maven to build the artefacts and start TomEE.
 
 ```bash
-azrael:polytech mosser$ https://github.com/polytechnice-si/4A_ISA_WebServices_Cycle.git 
+azrael:polytech mosser$ git clone https://github.com/polytechnice-si/4A_ISA_WebServices_Cycle.git 
 azrael:polytech mosser$ cd 4A_ISA_WebServices_Cycle
 azrael:polytech mosser$ mvn clean package
 azrael:polytech mosser$ cd services
