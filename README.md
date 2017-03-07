@@ -284,5 +284,87 @@ Summary:
   - Pros: Allows one to control the way data are exchanged for a given operation; 
   - Cons: Need to create and maintain dedicated classes just for transferring data.
 
-## Bonus: Automating Stub generation with maven
+## Bonus: Automating stub generation with maven
 
+One must not apply version control to generated sources. This is the case for the Java code associated to the WSDL contracts. To prevent git to track these files, we add a `.gitignore` descriptor in the `clients` module, containing the prefix to ignore.
+
+```
+src/main/java/stubs/
+```
+
+We can now erase these files from the disk, and instead asks Maven to call the `wsdl2java` code generator on our behalf (in the `pom.xmnl` descriptor). 
+
+We use the `cxf-codegen-plugin` to support this task. The following configuration asks the plugin to process `DemoCycle.wsdl`, and to put the classes associated to the XML namespace `http://www.polytech.unice.fr/si/4a/isa/demo/cycle/` into a package named `stubs.cycle`. The configuration is hooked to the `generate-sources` step of the maven build process, which is triggered before the source compilation.
+
+```xml
+<plugin>
+  <groupId>org.apache.cxf</groupId>
+  <artifactId>cxf-codegen-plugin</artifactId>
+  <version>${cxf.version}</version>
+  <executions>
+    <execution>
+      <id>generate-sources</id>
+      <phase>generate-sources</phase>
+      <configuration>
+        <sourceRoot>${basedir}/src/main/java/</sourceRoot>
+        <wsdlOptions>
+          <wsdlOption>
+            <wsdl>${basedir}/src/main/resources/DemoCycle.wsdl</wsdl>
+            <extraargs>
+              <extraarg>-p</extraarg>
+              <extraarg>http://www.polytech.unice.fr/si/4a/isa/demo/cycle/=stubs.cycle</extraarg>
+            </extraargs>
+          </wsdlOption>
+        </wsdlOptions>
+      </configuration>
+      <goals>
+        <goal>wsdl2java</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+```
+
+With this configuration, one can notice that the plugin is called after the `default-clean` step and before the `default-resource` one. If one wants to add other WSDL contracts to process, simply add more `wsdlOption` nodes in the configuration file.
+
+```
+azrael:clients mosser$ mvn clean package
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building ISA :: Cyclic References :: Remote Clients 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ ws-cycle-client ---
+[INFO] Deleting /Users/mosser/work/polytech/4A_ISA_WebServices_Cycle/clients/target
+[INFO] 
+[INFO] --- cxf-codegen-plugin:3.1.10:wsdl2java (generate-sources) @ ws-cycle-client ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ ws-cycle-client ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 4 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ ws-cycle-client ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 35 source files to /Users/mosser/work/polytech/4A_ISA_WebServices_Cycle/clients/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ ws-cycle-client ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/mosser/work/polytech/4A_ISA_WebServices_Cycle/clients/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ ws-cycle-client ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ ws-cycle-client ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ ws-cycle-client ---
+[INFO] Building jar: /Users/mosser/work/polytech/4A_ISA_WebServices_Cycle/clients/target/ws-cycle-client-1.0-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 4.423 s
+[INFO] Finished at: 2017-03-07T15:36:06+01:00
+[INFO] Final Memory: 25M/298M
+[INFO] ------------------------------------------------------------------------
+```
