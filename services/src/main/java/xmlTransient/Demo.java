@@ -1,4 +1,4 @@
-package xmlRef;
+package xmlTransient;
 
 
 import javax.ejb.Stateless;
@@ -6,8 +6,8 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.List;
 
-@WebService(targetNamespace = "http://www.polytech.unice.fr/si/4a/isa/demo/cycle/")
-@Stateless(name="DemoReference")
+@WebService(targetNamespace = "http://www.polytech.unice.fr/si/4a/isa/demo/transient/")
+@Stateless(name="DemoTransient")
 public class Demo {
 
     @WebMethod

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/demo/transient/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="DemoService" targetNamespace="http://www.polytech.unice.fr/si/4a/isa/demo/transient/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/demo/transient/" elementFormDefault="unqualified" targetNamespace="http://www.polytech.unice.fr/si/4a/isa/demo/transient/" version="1.0">
+
+            <xs:element name="listCustomers" type="tns:listCustomers"/>
+
+            <xs:element name="listCustomersResponse" type="tns:listCustomersResponse"/>
+
+            <xs:complexType name="listCustomers">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:complexType name="listCustomersResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:customer"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="customer">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="card" type="tns:card"/>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="card">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="identifier" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="listCustomersResponse">
+        <wsdl:part element="tns:listCustomersResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="listCustomers">
+        <wsdl:part element="tns:listCustomers" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="Demo">
+        <wsdl:operation name="listCustomers">
+            <wsdl:input message="tns:listCustomers" name="listCustomers">
+            </wsdl:input>
+            <wsdl:output message="tns:listCustomersResponse" name="listCustomersResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="DemoServiceSoapBinding" type="tns:Demo">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="listCustomers">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="listCustomers">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="listCustomersResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="DemoService">
+        <wsdl:port binding="tns:DemoServiceSoapBinding" name="DemoPort">
+            <soap:address location="http://localhost:8080/ws-demo/webservices/DemoTransient"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
