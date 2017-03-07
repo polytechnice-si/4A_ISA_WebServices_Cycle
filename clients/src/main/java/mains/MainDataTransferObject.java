@@ -1,17 +1,16 @@
 package mains;
 
-import stubs.xmlTransient.*;
+import stubs.dto.*;
 
-public class MainXmlTransient {
+public class MainDataTransferObject {
 
     public static void main(String[] args) {
         DemoService service = new DemoService();
         Demo port = service.getDemoPort();
         System.out.println("** Retrieving Customers");
-        for (Customer customer : port.listCustomers()) {
-            System.out.println("  - " + customer.getName() + " - " + customer.getCard().getIdentifier());
+        for (CustomerWithCard dto : port.listCustomers()) {
+            System.out.println("  - " + dto.getName() + " - " + dto.getCardId());
         }
         System.out.println("** done");
     }
-
 }
