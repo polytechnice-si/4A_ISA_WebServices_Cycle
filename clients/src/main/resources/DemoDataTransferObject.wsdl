@@ -1,7 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/demo/ref/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="DemoService" targetNamespace="http://www.polytech.unice.fr/si/4a/isa/demo/ref/">
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/demo/dto/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+                  name="DemoService" targetNamespace="http://www.polytech.unice.fr/si/4a/isa/demo/dto/">
     <wsdl:types>
-        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/demo/ref/" elementFormDefault="unqualified" targetNamespace="http://www.polytech.unice.fr/si/4a/isa/demo/ref/" version="1.0">
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:tns="http://www.polytech.unice.fr/si/4a/isa/demo/dto/" elementFormDefault="unqualified"
+                   targetNamespace="http://www.polytech.unice.fr/si/4a/isa/demo/dto/" version="1.0">
 
             <xs:element name="listCustomers" type="tns:listCustomers"/>
 

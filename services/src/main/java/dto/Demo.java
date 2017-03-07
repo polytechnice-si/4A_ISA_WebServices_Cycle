@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@WebService(targetNamespace = "http://www.polytech.unice.fr/si/4a/isa/demo/ref/")
+@WebService(targetNamespace = "http://www.polytech.unice.fr/si/4a/isa/demo/dto/")
 @Stateless(name="DemoDataTransferObject")
 public class Demo {
 
